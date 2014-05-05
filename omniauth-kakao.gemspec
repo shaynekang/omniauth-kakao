@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.email       = ["shayne.kang@gmail.com"]
   s.homepage    = "http://www.medium.com/@shaynekang"
   s.summary     = %q{OmniAuth strategy for Kakao}
-  s.description = %q{OmniAuth strategy for Kakao(under construction)}
+  s.description = %q{OmniAuth strategy for Kakao(http://developers.kakao.com/)}
   s.license     = "MIT"
 
   s.rubyforge_project = "omniauth-kakao"
@@ -19,4 +19,11 @@ Gem::Specification.new do |s|
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
+
+  s.add_dependency 'omniauth', '~> 1.0'
+  s.add_dependency 'omniauth-oauth2', '~> 1.1'
+
+  s.add_development_dependency 'rspec', '~> 2.14.1'
+  s.add_development_dependency 'guard-rspec', '~> 4.2.8'
+  s.add_development_dependency 'fakeweb', '~> 1.3.0'
 end
