@@ -31,6 +31,7 @@ describe OmniAuth::Strategies::Kakao do
       request = generate_request('/auth/kakao')
 
       code, env = middleware.call(request)
+
       code.should == 302
 
       expect_url = <<-EXPECT
@@ -38,11 +39,10 @@ describe OmniAuth::Strategies::Kakao do
           ?client_id=#{CLIENT_ID}
           &redirect_uri=http://#{SERVER_NAME}/oauth
           &response_type=code
-      EXPECT
-      expect_url = expect_url.gsub(/(\n|\t|\s)/, '')
+        EXPECT
+        .gsub(/(\n|\t|\s)/, '')
 
-      actual_url = URI.decode(env['Location'])
-      actual_url = actual_url.split("&state")[0]
+      actual_url = URI.decode(env['Location'].split("&state")[0])
 
       actual_url.should == expect_url
     end
@@ -92,22 +92,23 @@ describe OmniAuth::Strategies::Kakao do
       })
 
       code, env = middleware.call(request)
+
       code.should == 200
 
-      result = env['omniauth.auth']
+      response = env['omniauth.auth']
 
-      result.provider.should == "kakao"
-      result.uid.should == "123456789"
+      response.provider.should == "kakao"
+      response.uid.should == "123456789"
 
-      information = result.info
+      information = response.info
       information.name.should == "John Doe"
       information.image.should == "http://xxx.kakao.com/.../aaa.jpg"
 
-      credentials = result.credentials
+      credentials = response.credentials
       credentials.token.should == ACCESS_TOKEN
       credentials.refresh_token.should == REFRESH_TOKEN
 
-      properties = result.extra.properties
+      properties = response.extra.properties
       properties.nickname.should == "John Doe"
       properties.thumbnail_image.should == "http://xxx.kakao.com/.../aaa.jpg"
       properties.profile_image.should == "http://xxx.kakao.com/.../bbb.jpg"
