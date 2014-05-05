@@ -3,8 +3,7 @@
 This is the OmniAuth strategy for authenticating to [Kakao](http://www.kakao.com/). To
 use it, you'll need to sign up for an REST API Key on the [Kakao Developers Page](http://developers.kakao.com). For more information, please refer to [Create New Application](https://developers.kakao.com/docs/restapi#시작하기-앱-생성) page.
 
-[카카오](http://www.kakao.com/) 인증을 위한 OmniAuth strategy 입니다.
-[카카오 개발자 페이지](http://developers.kakao.com) 에서 REST API 키를 생성한 뒤 이용할 수 있습니다. 자세한 사항은 [앱 생성](https://developers.kakao.com/docs/restapi#시작하기-앱-생성) 페이지를 참조해 주세요.
+[카카오](http://www.kakao.com/) 인증을 위한 OmniAuth strategy 입니다. [카카오 개발자 페이지](http://developers.kakao.com)에서 REST API 키를 생성한 후 이용할 수 있습니다. 자세한 내용은 [앱 생성](https://developers.kakao.com/docs/restapi#시작하기-앱-생성) 페이지를 참조해 주세요.
 
 ## Installing
 
