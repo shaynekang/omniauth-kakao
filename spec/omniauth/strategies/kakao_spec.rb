@@ -100,7 +100,7 @@ describe OmniAuth::Strategies::Kakao do
       result.uid.should == "123456789"
 
       information = result.info
-      information.nickname.should == "John Doe"
+      information.name.should == "John Doe"
       information.image.should == "http://xxx.kakao.com/.../aaa.jpg"
 
       credentials = result.credentials
