@@ -19,7 +19,7 @@ describe OmniAuth::Strategies::Kakao do
     end
   end
 
-  def generate_request(url, opts={})
+  def make_request(url, opts={})
     Rack::MockRequest.env_for(url, {
       'rack.session' => {},
       'SERVER_NAME' => SERVER_NAME,
@@ -28,7 +28,7 @@ describe OmniAuth::Strategies::Kakao do
 
   describe "GET /auth/kakao" do
     it "should redirect to authorize page" do
-      request = generate_request('/auth/kakao')
+      request = make_request('/auth/kakao')
 
       code, env = middleware.call(request)
 
@@ -87,7 +87,7 @@ describe OmniAuth::Strategies::Kakao do
     end
 
     it "should request access token and user information" do
-      request = generate_request("/oauth?code=#{CODE}&state=#{STATE}", {
+      request = make_request("/oauth?code=#{CODE}&state=#{STATE}", {
         'rack.session' => {
           'omniauth.state' => STATE
         },
