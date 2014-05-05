@@ -54,7 +54,7 @@ describe OmniAuth::Strategies::Kakao do
     ACCESS_TOKEN = "dummy-access-token"
     REFRESH_TOKEN = "dummy-refresh-token"
 
-    it "should request access token and user information" do
+    before do
       FakeWeb.register_uri(:post, "https://kauth.kakao.com/oauth/token",
         :content_type => "application/json;charset=UTF-8",
         :parameters => {
@@ -84,7 +84,9 @@ describe OmniAuth::Strategies::Kakao do
           }
         }.to_json
       )
+    end
 
+    it "should request access token and user information" do
       request = generate_request("/oauth?code=#{CODE}&state=#{STATE}", {
         'rack.session' => {
           'omniauth.state' => STATE
