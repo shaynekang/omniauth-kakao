@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Shayne Sung-Hee Kang"]
   s.email       = ["shayne.kang@gmail.com"]
-  s.homepage    = "http://www.medium.com/@shaynekang"
+  s.homepage    = "http://medium.com/@shaynekang"
   s.summary     = %q{OmniAuth strategy for Kakao}
   s.description = %q{OmniAuth strategy for Kakao(http://developers.kakao.com/)}
   s.license     = "MIT"
