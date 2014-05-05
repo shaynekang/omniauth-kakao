@@ -97,7 +97,7 @@ describe OmniAuth::Strategies::Kakao do
       result = env['omniauth.auth']
 
       result.provider.should == "kakao"
-      result.uid.should == 123456789
+      result.uid.should == "123456789"
 
       information = result.info
       information.nickname.should == "John Doe"
