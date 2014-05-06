@@ -30,7 +30,9 @@ module OmniAuth
       end
 
       def callback_phase
-        @env["PATH_INFO"] = "/auth/kakao/callback"
+        previous_callback_path = options.delete(:callback_path)
+        @env["PATH_INFO"] = callback_path
+        options[:callback_path] = previous_callback_path
         super
       end
 
