@@ -3,7 +3,7 @@
 This is the OmniAuth strategy for authenticating to [Kakao](http://www.kakao.com/). To
 use it, you'll need to sign up for an REST API Key on the [Kakao Developers Page](http://developers.kakao.com). For more information, please refer to [Create New Application](https://developers.kakao.com/docs/restapi#시작하기-앱-생성) page.
 
-[카카오](http://www.kakao.com/) 인증을 위한 OmniAuth strategy 입니다. [카카오 개발자 페이지](http://developers.kakao.com)에서 REST API 키를 생성한 뒤 이용해 주세요. 자세한 사항은 [시작하기 - 앱 생성](https://developers.kakao.com/docs/restapi#시작하기-앱-생성) 페이지를 참조하시기 바랍니다.
+[카카오](http://www.kakao.com/) 인증을 위한 OmniAuth strategy 입니다. [카카오 개발자 페이지](http://developers.kakao.com)에서 REST API 키를 생성한 뒤 이용해 주세요. 자세한 사항은 [시작하기 - 앱 생성](https://developers.kakao.com/docs/restapi#시작하기-앱-생성) 페이지를 참고하시기 바랍니다.
 
 ## Installing
 
@@ -23,7 +23,7 @@ Then `bundle install`.
 
 Here's a quick example, adding the middleware to a Rails app in `config/initializers/omniauth.rb`:
 
-다음은 간단한 예제입니다. `config/initializers/omniauth.rb`에서 미들웨어를 레일즈 어플리케이션에 넣어주세요.
+다음은 간단한 예제입니다. `config/initializers/omniauth.rb`에서 미들웨어(Middleware)를 레일즈 어플리케이션에 넣어주세요.
 
 
 ```ruby
@@ -40,7 +40,7 @@ Then go to [My Application](https://developers.kakao.com/apps) page, select your
 
 For more information, please read the [OmniAuth](https://github.com/intridea/omniauth) docs for detailed instructions.
 
-자세한 사항은 [OmniAuth](https://github.com/intridea/omniauth)의 문서를 참고해 주세요.
+더 자세한 사항은 [OmniAuth](https://github.com/intridea/omniauth)의 문서를 참고해 주세요.
 
 ## Example
 
@@ -60,7 +60,7 @@ Then open `http://localhost:4567/` in your browser.
 
 Warning: Do not forgot to add `http://localhost:4567/` in your [Application Setting](https://developers.kakao.com/apps).
 
-주의: [어플리케이션 설정](https://developers.kakao.com/apps) 의 '설정된 플랫폼 - 웹 - 사이트 도메인'에 `http://localhost:4567/`을 넣는 걸 잊지 마세요.
+주의: [내 어플리케이션](https://developers.kakao.com/apps) 의 '설정된 플랫폼 - 웹 - 사이트 도메인'에 `http://localhost:4567/`을 넣는 걸 잊지 마세요.
 
 ## Auth Hash
 
