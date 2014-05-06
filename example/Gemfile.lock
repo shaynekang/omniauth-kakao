@@ -1,7 +1,7 @@
 PATH
   remote: ../
   specs:
-    omniauth-kakao (0.0.2)
+    omniauth-kakao (0.1.0)
       omniauth (~> 1.0)
       omniauth-oauth2 (~> 1.1)
 
