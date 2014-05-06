@@ -78,7 +78,7 @@ Here's an example *Auth Hash* available in `request.env['omniauth.auth']`:
 1. 저장소를 Fork해 주세요.
 1. 각각의 신 기능(또는 개선할 부분)마다 새로운 브랜치를 만들어 주세요.
 1. 테스트를 작성해주세요. 이는 매우 중요합니다!
-1. 기능 브랜치를 pull request로 보내주세요.
+1. 브랜치를 pull request로 보내주세요.
 
 
 ## License
