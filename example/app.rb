@@ -61,6 +61,20 @@ __END__
         text-align: center;
       }
 
+      #login-form.panel-primary {
+        border-color: #FFEB00;
+      }
+
+      #login-form.panel-primary > .panel-heading {
+        background-image: -webkit-linear-gradient(top, #FFEB00 0, #FFEB00 100%);
+        background-image: -moz-linear-gradient(top, #FFEB00 0, #FFEB00 100%);
+        background-image: -o-linear-gradient(top, #FFEB00 0, #FFEB00 100%);
+        background-image: linear-gradient(top, #FFEB00 0, #FFEB00 100%);
+        background-color: #FFEB00;
+        border-color: #FFEB00;
+        color: #3D1D12;
+      }
+
       .btn-kakao {
         display: inline-block;
         background-image: url("https://kauth.kakao.com/public/widget/login/kr/kr_02_medium.png");
