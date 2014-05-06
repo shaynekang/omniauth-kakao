@@ -3,7 +3,7 @@
 This is the OmniAuth strategy for authenticating to [Kakao](http://www.kakao.com/). To
 use it, you'll need to sign up for an REST API Key on the [Kakao Developers Page](http://developers.kakao.com). For more information, please refer to [Create New Application](https://developers.kakao.com/docs/restapi#시작하기-앱-생성) page.
 
-[카카오](http://www.kakao.com/) 인증을 위한 OmniAuth strategy 입니다. [카카오 개발자 페이지](http://developers.kakao.com)에서 REST API 키를 생성한 뒤 이용해 주세요. 자세한 내용은 [시작하기 - 앱 생성](https://developers.kakao.com/docs/restapi#시작하기-앱-생성) 페이지를 참조하시기 바랍니다.
+[카카오](http://www.kakao.com/) 인증을 위한 OmniAuth strategy 입니다. [카카오 개발자 페이지](http://developers.kakao.com)에서 REST API 키를 생성한 뒤 이용해 주세요. 자세한 사항은 [시작하기 - 앱 생성](https://developers.kakao.com/docs/restapi#시작하기-앱-생성) 페이지를 참조하시기 바랍니다.
 
 ## Installing
 
@@ -32,9 +32,35 @@ Rails.application.config.middleware.use OmniAuth::Builder do
 end
 ```
 
+Then go to [My Application](https://developers.kakao.com/apps) page, select your current application and add your domain address(ex: http://localhost:3000/) to  'Setting - Platform - Web - Site Domain'.
+
+그리고 [내 어플리케이션](https://developers.kakao.com/apps)에서 현재 어플리케이션을 선택하고, '설정 - 플랫폼 - 웹 - 사이트 도메인'에  도메인 주소(예: http://localhost:3000/)를 넣어주세요.
+
+![이미지](https://developers.kakao.com/assets/images/dashboard/dev_011.png)
+
 For more information, please read the [OmniAuth](https://github.com/intridea/omniauth) docs for detailed instructions.
 
-자세한 내용은 [OmniAuth](https://github.com/intridea/omniauth)의 문서를 참고해 주세요.
+자세한 사항은 [OmniAuth](https://github.com/intridea/omniauth)의 문서를 참고해 주세요.
+
+## Example
+
+You can test omniauth-kakao in the `example/` folder.
+
+`example/` 폴더에 있는 예제를 통해 omniauth-kakao를 테스트해볼 수 있습니다.
+
+```
+cd example/
+bundle install
+KAKAO_CLIENT_ID='<your-kakako-client-id>' ruby app.rb
+```
+
+Then open `http://localhost:4567/` in your browser.
+
+이후 `http://localhost:4567/`로 접속하시면 됩니다.
+
+Warning: Do not forgot to add `http://localhost:4567/` in your [Application Setting](https://developers.kakao.com/apps).
+
+주의: [어플리케이션 설정](https://developers.kakao.com/apps) 의 '설정된 플랫폼 - 웹 - 사이트 도메인'에 `http://localhost:4567/`을 넣는 걸 잊지 마세요.
 
 ## Auth Hash
 
@@ -76,7 +102,7 @@ Here's an example *Auth Hash* available in `request.env['omniauth.auth']`:
 ***
 
 1. 저장소를 Fork해 주세요.
-1. 각각의 신 기능(또는 개선할 부분)마다 새로운 브랜치를 만들어 주세요.
+1. 새로운 기능(또는 개선할 부분)마다 브랜치를 만들어 주세요.
 1. 테스트를 작성해주세요. 이는 매우 중요합니다!
 1. 브랜치를 pull request로 보내주세요.
 
