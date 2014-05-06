@@ -58,7 +58,7 @@ Then open `http://localhost:4567/` in your browser.
 
 이후 `http://localhost:4567/`로 접속하시면 됩니다.
 
-Warning: Do not forgot to add `http://localhost:4567/` in your [Application Setting](https://developers.kakao.com/apps).
+Warning: Do not forgot to add `http://localhost:4567/` in [My Application](https://developers.kakao.com/apps).
 
 주의: [내 어플리케이션](https://developers.kakao.com/apps) 의 '설정된 플랫폼 - 웹 - 사이트 도메인'에 `http://localhost:4567/`을 넣는 걸 잊지 마세요.
 
