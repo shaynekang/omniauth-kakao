@@ -14,29 +14,27 @@ module OmniAuth
       uid { raw_info['id'].to_s }
 
       info do
-        {
-          'name' => raw_properties['nickname'],
-          'image' => raw_properties['thumbnail_image'],
-        }
+        prune!({
+                 'name' => raw_properties['nickname'],
+                 'image' => raw_properties['thumbnail_image'],
+        })
       end
 
       extra do
-        {'properties' => raw_properties}
+        hash = {}
+        hash[:properties] = raw_properties
+        prune! hash
       end
 
-      def initialize(app, *args, &block)
-        super
-        options[:callback_path] = "/oauth"
+      private
+
+      def prune!(hash)
+        hash.delete_if do |_, v|
+          prune!(v) if v.is_a?(Hash)
+          v.nil? || (v.respond_to?(:empty?) && v.empty?)
+        end
       end
 
-      def callback_phase
-        previous_callback_path = options.delete(:callback_path)
-        @env["PATH_INFO"] = callback_path
-        options[:callback_path] = previous_callback_path
-        super
-      end
-
-    private
       def raw_info
         @raw_info ||= access_token.get('https://kapi.kakao.com/v1/user/me', {}).parsed || {}
       end
