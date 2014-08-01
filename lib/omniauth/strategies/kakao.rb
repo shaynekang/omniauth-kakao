@@ -24,19 +24,9 @@ module OmniAuth
         {'properties' => raw_properties}
       end
 
-      def initialize(app, *args, &block)
-        super
-        options[:callback_path] = "/oauth"
-      end
 
-      def callback_phase
-        previous_callback_path = options.delete(:callback_path)
-        @env["PATH_INFO"] = callback_path
-        options[:callback_path] = previous_callback_path
-        super
-      end
+      private
 
-    private
       def raw_info
         @raw_info ||= access_token.get('https://kapi.kakao.com/v1/user/me', {}).parsed || {}
       end
