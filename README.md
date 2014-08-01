@@ -70,26 +70,24 @@ Here's an example *Auth Hash* available in `request.env['omniauth.auth']`:
 
 ```ruby
 {
-  :provider => 'kakao',
-  :uid => '123456789',
-  :info => {
-    :name => 'Hong Gil-Dong',
-    :image => 'http://xxx.kakao.com/.../aaa.jpg',
-  },
-  :credentials => {
-    :token => 'ABCDEF...', # OAuth 2.0 access_token, which you may wish to store.
-    :refresh_token => 'OPQRST...', # OAuth 2.0 refresh_token.
-    :expires_at => 1321747205, # when the access token expires (it always will)
-    :expires => true # this will always be true
-  },
-  :extra => {
-    :properties => {
-      :nickname => 'Hong Gil-Dong',
-      :thumbnail_image => 'http://xxx.kakao.com/.../aaa.jpg'
-      :profile_image => 'http://xxx.kakao.com/.../bbb.jpg'
-    }
-  }
-}
+  provider: kakao                                                                                                                                                                       │127.0.0.1 - - [01/Aug/2014 16:36:35] "GET /faye HTTP/1.1" HIJACKED -1 0.0006
+  uid: '1656831'                                                                                                                                                                        │127.0.0.1 - - [01/Aug/2014 16:36:35] "GET /faye?message=%5B%7B%22channel%22%3A%22%2Fmeta%2Fhandshake%22%2C%22version%22%3A%221.0%22%2C%22supportedConnectionTypes%22%3A%5B%22callback
+  info: !ruby/hash:OmniAuth::AuthHash::InfoHash                                                                                                                                         │-polling%22%5D%2C%22id%22%3A%221%22%7D%5D&jsonp=__jsonp1__ HTTP/1.1" HIJACKED -1 0.0004
+    name: "김수림"                                                                                                                                                                      │127.0.0.1 - - [01/Aug/2014 16:37:27] "GET /faye?message=%5B%7B%22channel%22%3A%22%2Fmeta%2Fhandshake%22%2C%22version%22%3A%221.0%22%2C%22supportedConnectionTypes%22%3A%5B%22callback
+    thumbnail_image: http://mud-kage.kakao.co.kr/14/dn/btqbrEZH0uH/YJAsXaWawNtQ32gwIhdgW0/o.jpg                                                                                         │-polling%22%5D%2C%22id%22%3A%221%22%7D%5D&jsonp=__jsonp1__ HTTP/1.1" HIJACKED -1 0.0003
+    profile_image: http://mud-kage.kakao.co.kr/14/dn/btqbrCnh7kj/5rkkAq6GASCd1hHhkIxKbK/o.jpg                                                                                           │127.0.0.1 - - [01/Aug/2014 16:37:28] "GET /faye HTTP/1.1" HIJACKED -1 0.0009
+  credentials: !ruby/hash:OmniAuth::AuthHash                                                                                                                                            │127.0.0.1 - - [01/Aug/2014 16:37:44] "GET /faye HTTP/1.1" HIJACKED -1 0.0007
+    token: tneJoAkZy1RG2TCFK2E8TzWRaDZrIqmKzIr11KwQQjMAAAFHkOPavQ                                                                                                                       │127.0.0.1 - - [01/Aug/2014 16:37:44] "GET /faye?message=%5B%7B%22channel%22%3A%22%2Fmeta%2Fhandshake%22%2C%22version%22%3A%221.0%22%2C%22supportedConnectionTypes%22%3A%5B%22callback
+    refresh_token: FZdBEjbuJDebaEbilBM992eGShfiZM5rkevTL6wQQjMAAAFHkOPavg                                                                                                               │-polling%22%5D%2C%22id%22%3A%221%22%7D%5D&jsonp=__jsonp1__ HTTP/1.1" HIJACKED -1 0.0003
+    expires_at: 1406906907                                                                                                                                                              │127.0.0.1 - - [01/Aug/2014 16:37:46] "POST /faye HTTP/1.1" HIJACKED -1 0.0005
+    expires: true                                                                                                                                                                       │127.0.0.1 - - [01/Aug/2014 16:43:08] "GET /faye HTTP/1.1" HIJACKED -1 0.0006
+  extra: !ruby/hash:OmniAuth::AuthHash                                                                                                                                                  │127.0.0.1 - - [01/Aug/2014 16:43:08] "GET /faye?message=%5B%7B%22channel%22%3A%22%2Fmeta%2Fhandshake%22%2C%22version%22%3A%221.0%22%2C%22supportedConnectionTypes%22%3A%5B%22callback
+    raw_info: !ruby/hash:OmniAuth::AuthHash                                                                                                                                             │-polling%22%5D%2C%22id%22%3A%221%22%7D%5D&jsonp=__jsonp1__ HTTP/1.1" HIJACKED -1 0.0007
+      id: 1656831                                                                                                                                                                       │127.0.0.1 - - [01/Aug/2014 16:43:35] "GET /faye HTTP/1.1" HIJACKED -1 0.0004
+      properties: !ruby/hash:OmniAuth::AuthHash                                                                                                                                         │127.0.0.1 - - [01/Aug/2014 16:43:35] "GET /faye?message=%5B%7B%22channel%22%3A%22%2Fmeta%2Fhandshake%22%2C%22version%22%3A%221.0%22%2C%22supportedConnectionTypes%22%3A%5B%22callback
+        nickname: "김수림"                                                                                                                                                              │-polling%22%5D%2C%22id%22%3A%221%22%7D%5D&jsonp=__jsonp1__ HTTP/1.1" HIJACKED -1 0.0003
+        thumbnail_image: http://mud-kage.kakao.co.kr/14/dn/btqbrEZH0uH/YJAsXaWawNtQ32gwIhdgW0/o.jpg                                                                                     │127.0.0.1 - - [01/Aug/2014 16:46:31] "GET /faye HTTP/1.1" HIJACKED -1 0.0005
+        profile_image: http://mud-kage.kakao.co.kr/14/dn/btqbrCnh7kj/5rkkAq6GASCd1hHhkIxKbK/o.jpg
 ```
 
 ## Contribute
