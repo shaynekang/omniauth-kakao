@@ -6,9 +6,9 @@ module OmniAuth
       option :name, 'kakao'
 
       option :client_options, {
-        :site => 'https://kauth.kakao.com',
-        :authorize_path => '/oauth/authorize',
-        :token_url => '/oauth/token',
+        :site => 'https://kapi.kakao.com/v1',
+        :authorize_path => 'https://kauth.kakao.com/oauth/authorize',
+        :token_url => 'https://kauth.kakao.com/oauth/token',
       }
 
       uid { raw_info['id'].to_s }
@@ -16,8 +16,7 @@ module OmniAuth
       info do
         {
           'name' => raw_properties['nickname'],
-          'thumbnail_image' => raw_properties['thumbnail_image'],
-          'profile_image' => raw_properties['profile_image'],
+          'image' => raw_properties['thumbnail_image'],
         }
       end
 
@@ -29,7 +28,7 @@ module OmniAuth
       private
 
       def raw_info
-        @raw_info ||= access_token.get('https://kapi.kakao.com/v1/user/me').parsed
+        @raw_info ||= access_token.get('/user/me').parsed
       end
 
       def raw_properties
