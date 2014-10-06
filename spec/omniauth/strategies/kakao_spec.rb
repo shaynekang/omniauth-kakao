@@ -116,4 +116,52 @@ describe OmniAuth::Strategies::Kakao do
       properties.profile_image.should == "http://xxx.kakao.com/.../bbb.jpg"
     end
   end
+
+  context "test environment" do
+    before do
+      OmniAuth.config.test_mode = true
+      OmniAuth.config.add_mock(:kakao, {
+        provider: "kakao",
+        uid: "123456789",
+        info: {
+          name: "John Doe",
+          image: "http://xxx.kakao.com/.../aaa.jpg"
+        }
+      })
+    end
+
+    describe "GET /auth/kakao" do
+      it "should redirect to callback url (/auth/kakao/callback)" do
+        request = make_request("/auth/kakao")
+        code, env = middleware.call(request)
+
+        code.should == 302
+
+        actual_path = URI(env["Location"]).path
+        actual_path.should == "/auth/kakao/callback"
+      end
+    end
+
+    describe "GET /auth/kakao/callback" do
+      it "should request registered mock" do
+        request = make_request("/auth/kakao/callback")
+        code, env = middleware.call(request)
+
+        code.should == 200
+
+        response = env["omniauth.auth"]
+
+        response.provider.should == "kakao"
+        response.uid.should == "123456789"
+
+        information = response.info
+        information.name.should == "John Doe"
+        information.image.should == "http://xxx.kakao.com/.../aaa.jpg"
+      end
+    end
+
+    after do
+      OmniAuth.config.test_mode = false
+    end
+  end
 end
