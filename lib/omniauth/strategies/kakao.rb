@@ -36,6 +36,11 @@ module OmniAuth
         super
       end
 
+      def mock_call!(*)
+        options.delete(:callback_path)
+        super
+      end
+
     private
       def raw_info
         @raw_info ||= access_token.get('https://kapi.kakao.com/v1/user/me', {}).parsed || {}
