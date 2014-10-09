@@ -10,15 +10,6 @@ describe OmniAuth::Strategies::Kakao do
     OmniAuth.config.logger.level = 5
   end
 
-  let(:middleware) do
-    app = ->(env) { [200, env, "app"] }
-
-    middleware = OmniAuth::Strategies::Kakao.new(app)
-    middleware.tap do |middleware|
-      middleware.options.client_id = CLIENT_ID
-    end
-  end
-
   def make_middleware(client_id, opts={})
     app = ->(env) { [200, env, "app"] }
 
@@ -38,6 +29,7 @@ describe OmniAuth::Strategies::Kakao do
   describe "GET /auth/kakao" do
     it "should redirect to authorize page" do
       request = make_request('/auth/kakao')
+      middleware = make_middleware(CLIENT_ID)
 
       code, env = middleware.call(request)
 
@@ -123,6 +115,8 @@ describe OmniAuth::Strategies::Kakao do
         },
       })
 
+      middleware = make_middleware(CLIENT_ID)
+
       code, env = middleware.call(request)
 
       code.should == 200
@@ -163,6 +157,7 @@ describe OmniAuth::Strategies::Kakao do
     describe "GET /auth/kakao" do
       it "should redirect to callback url (/auth/kakao/callback)" do
         request = make_request("/auth/kakao")
+        middleware = make_middleware(CLIENT_ID)
         code, env = middleware.call(request)
 
         code.should == 302
@@ -175,6 +170,7 @@ describe OmniAuth::Strategies::Kakao do
     describe "GET /auth/kakao/callback" do
       it "should request registered mock" do
         request = make_request("/auth/kakao/callback")
+        middleware = make_middleware(CLIENT_ID)
         code, env = middleware.call(request)
 
         code.should == 200
