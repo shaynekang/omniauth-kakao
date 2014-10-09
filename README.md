@@ -98,7 +98,7 @@ Here's an example *Auth Hash* available in `request.env['omniauth.auth']`:
 }
 ```
 
-## Contributors:
+## Contributors
 * [Shayne Sung-Hee Kang](https://github.com/shaynekang)
 * [Hong Chulju](https://github.com/fegs)
 
