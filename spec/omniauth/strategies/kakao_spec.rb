@@ -19,6 +19,15 @@ describe OmniAuth::Strategies::Kakao do
     end
   end
 
+  def make_middleware(client_id, opts={})
+    app = ->(env) { [200, env, "app"] }
+
+    middleware = OmniAuth::Strategies::Kakao.new(app, opts)
+    middleware.tap do |middleware|
+      middleware.options.client_id = client_id
+    end
+  end
+
   def make_request(url, opts={})
     Rack::MockRequest.env_for(url, {
       'rack.session' => {},
@@ -38,6 +47,27 @@ describe OmniAuth::Strategies::Kakao do
         https://kauth.kakao.com/oauth/authorize
           ?client_id=#{CLIENT_ID}
           &redirect_uri=http://#{SERVER_NAME}/oauth
+          &response_type=code
+        EXPECT
+        .gsub(/(\n|\t|\s)/, '')
+
+      actual_url = URI.decode(env['Location'].split("&state")[0])
+
+      actual_url.should == expect_url
+    end
+
+    it "should customize redirect path" do
+      request = make_request('/auth/kakao')
+      middleware = make_middleware(CLIENT_ID, redirect_path: '/auth/kakao/callback')
+
+      code, env = middleware.call(request)
+
+      code.should == 302
+
+      expect_url = <<-EXPECT
+        https://kauth.kakao.com/oauth/authorize
+          ?client_id=#{CLIENT_ID}
+          &redirect_uri=http://#{SERVER_NAME}/auth/kakao/callback
           &response_type=code
         EXPECT
         .gsub(/(\n|\t|\s)/, '')
