@@ -3,6 +3,8 @@ require 'omniauth-oauth2'
 module OmniAuth
   module Strategies
     class Kakao < OmniAuth::Strategies::OAuth2
+      DEFAULT_REDIRECT_PATH = "/oauth"
+
       option :name, 'kakao'
 
       option :client_options, {
@@ -26,7 +28,7 @@ module OmniAuth
 
       def initialize(app, *args, &block)
         super
-        options[:callback_path] = options[:redirect_path] || "/oauth"
+        options[:callback_path] = options[:redirect_path] || DEFAULT_REDIRECT_PATH
       end
 
       def callback_phase

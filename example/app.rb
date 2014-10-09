@@ -8,7 +8,7 @@ if client_id == nil
   raise NoClientIDError, "KAKAO_CLIENT_ID is nil. Please run example like `KAKAO_CLIENT_ID='<your-kakako-client-id>' ruby app.rb`"
 end
 
-redirect_path = ENV['REDIRECT_PATH'] || "/oauth"
+redirect_path = ENV['REDIRECT_PATH'] || OmniAuth::Strategies::Kakao::DEFAULT_REDIRECT_PATH
 
 use Rack::Session::Cookie
 
