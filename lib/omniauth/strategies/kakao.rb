@@ -26,7 +26,7 @@ module OmniAuth
 
       def initialize(app, *args, &block)
         super
-        options[:callback_path] = "/oauth"
+        options[:callback_path] = options[:redirect_path] || "/oauth"
       end
 
       def callback_phase
