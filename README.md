@@ -29,6 +29,9 @@ Here's a quick example, adding the middleware to a Rails app in `config/initiali
 ```ruby
 Rails.application.config.middleware.use OmniAuth::Builder do
   provider :kakao, ENV['KAKAO_CLIENT_ID']
+
+  # 또는 Redirect Path를 설정하고 싶다면(or if you want to customize your Redirect Path)
+  # provider :kakao, ENV['KAKAO_CLIENT_ID'], {:redirect_path => ENV['REDIRECT_PATH']}
 end
 ```
 
@@ -52,6 +55,9 @@ You can test omniauth-kakao in the `example/` folder.
 cd example/
 bundle install
 KAKAO_CLIENT_ID='<your-kakako-client-id>' ruby app.rb
+
+# 또는 Redirect Path를 설정하고 싶다면(or if you want to customize your Redirect Path)
+# KAKAO_CLIENT_ID='<your-kakako-client-id>' REDIRECT_PATH='<your-redirect-path>' ruby app.rb
 ```
 
 Then open `http://localhost:4567/` in your browser.
