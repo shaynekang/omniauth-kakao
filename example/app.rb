@@ -8,10 +8,12 @@ if client_id == nil
   raise NoClientIDError, "KAKAO_CLIENT_ID is nil. Please run example like `KAKAO_CLIENT_ID='<your-kakako-client-id>' ruby app.rb`"
 end
 
+redirect_path = ENV['REDIRECT_PATH'] || "/oauth"
+
 use Rack::Session::Cookie
 
 use OmniAuth::Builder do
-  provider :kakao, client_id
+  provider :kakao, client_id, {:redirect_path => redirect_path}
 end
 
 helpers do
@@ -22,6 +24,10 @@ helpers do
       "<p>#{e}</p>"
     end.join
   end
+end
+
+before do
+  @redirect_path = redirect_path
 end
 
 get '/' do
@@ -86,6 +92,11 @@ __END__
         font-size: 0;
         color: transparent;
       }
+
+      #redirect-path {
+        text-align: right;
+        margin: 20px 0 0 0;
+      }
     </style>
   </head>
   <body>
@@ -99,6 +110,7 @@ __END__
 
             <div class="panel-body">
               <a href="/auth/kakao" class="btn-kakao">카카오 계정으로 로그인</a>
+              <p id="redirect-path"><small>Redirect Path: <%= @redirect_path %></small></p>
             </div>
           </div>
         </div>
