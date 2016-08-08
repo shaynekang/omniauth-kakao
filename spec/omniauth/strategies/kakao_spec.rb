@@ -167,9 +167,9 @@ describe OmniAuth::Strategies::Kakao do
       end
     end
 
-    describe "GET /auth/kakao/callback" do
+    describe "GET /oauth" do
       it "should request registered mock" do
-        request = make_request("/auth/kakao/callback")
+        request = make_request("/oauth")
         middleware = make_middleware(CLIENT_ID)
         code, env = middleware.call(request)
 
