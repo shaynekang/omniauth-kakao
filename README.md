@@ -101,6 +101,7 @@ Here's an example *Auth Hash* available in `request.env['omniauth.auth']`:
 ## Contributors
 * [Shayne Sung-Hee Kang](https://github.com/shaynekang)
 * [Hong Chulju](https://github.com/fegs)
+* [leekorea(hans-hk)](https://github.com/hans-hk)
 
 ## Contribute
 
