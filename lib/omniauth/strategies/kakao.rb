@@ -31,16 +31,8 @@ module OmniAuth
         options[:callback_path] = options[:redirect_path] || DEFAULT_REDIRECT_PATH
       end
 
-      def callback_phase
-        previous_callback_path = options.delete(:callback_path)
-        @env["PATH_INFO"] = "/auth/kakao/callback"
-        options[:callback_path] = previous_callback_path
-        super
-      end
-
-      def mock_call!(*)
-        options.delete(:callback_path)
-        super
+      def callback_url
+        options[:callback_url] || (full_host + script_name + callback_path)
       end
 
     private
