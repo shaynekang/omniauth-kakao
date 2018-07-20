@@ -19,6 +19,7 @@ module OmniAuth
         {
           'name' => raw_properties['nickname'],
           'image' => raw_properties['thumbnail_image'],
+          'email' => raw_info['kaccount_email'],
         }
       end
 
