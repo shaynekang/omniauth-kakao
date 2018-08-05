@@ -76,26 +76,24 @@ Here's an example *Auth Hash* available in `request.env['omniauth.auth']`:
 
 ```ruby
 {
-  :provider => 'kakao',
-  :uid => '123456789',
-  :info => {
-    :name => 'Hong Gil-Dong',
-    :image => 'http://xxx.kakao.com/.../aaa.jpg',
-  },
-  :credentials => {
-    :token => 'ABCDEF...', # OAuth 2.0 access_token, which you may wish to store.
-    :refresh_token => 'OPQRST...', # OAuth 2.0 refresh_token.
-    :expires_at => 1321747205, # when the access token expires (it always will)
-    :expires => true # this will always be true
-  },
-  :extra => {
-    :properties => {
-      :nickname => 'Hong Gil-Dong',
-      :thumbnail_image => 'http://xxx.kakao.com/.../aaa.jpg'
-      :profile_image => 'http://xxx.kakao.com/.../bbb.jpg'
-    }
-  }
-}
+  provider: kakao
+  uid: '1656831'
+  info: !ruby/hash:OmniAuth::AuthHash::InfoHash
+    name: "김수림"
+    thumbnail_image: http://mud-kage.kakao.co.kr/14/dn/btqbrEZH0uH/YJAsXaWawNtQ32gwIhdgW0/o.jpg
+    profile_image: http://mud-kage.kakao.co.kr/14/dn/btqbrCnh7kj/5rkkAq6GASCd1hHhkIxKbK/o.jpg
+  credentials: !ruby/hash:OmniAuth::AuthHash
+    token: tneJoAkZy1RG2TCFK2E8TzWRaDZrIqmKzIr11KwQQjMAAAFHkOPavQ
+    refresh_token: FZdBEjbuJDebaEbilBM992eGShfiZM5rkevTL6wQQjMAAAFHkOPavg
+    expires_at: 1406906907
+    expires: true
+  extra: !ruby/hash:OmniAuth::AuthHash
+    raw_info: !ruby/hash:OmniAuth::AuthHash
+      id: 1656831
+      properties: !ruby/hash:OmniAuth::AuthHash
+        nickname: "김수림"
+        thumbnail_image: http://mud-kage.kakao.co.kr/14/dn/btqbrEZH0uH/YJAsXaWawNtQ32gwIhdgW0/o.jpg
+        profile_image: http://mud-kage.kakao.co.kr/14/dn/btqbrCnh7kj/5rkkAq6GASCd1hHhkIxKbK/o.jpg
 ```
 
 ## Contributors

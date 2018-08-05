@@ -154,19 +154,6 @@ describe OmniAuth::Strategies::Kakao do
       })
     end
 
-    describe "GET /auth/kakao" do
-      it "should redirect to callback url (/auth/kakao/callback)" do
-        request = make_request("/auth/kakao")
-        middleware = make_middleware(CLIENT_ID)
-        code, env = middleware.call(request)
-
-        code.should == 302
-
-        actual_path = URI(env["Location"]).path
-        actual_path.should == "/auth/kakao/callback"
-      end
-    end
-
     describe "GET /oauth" do
       it "should request registered mock" do
         request = make_request("/oauth")
