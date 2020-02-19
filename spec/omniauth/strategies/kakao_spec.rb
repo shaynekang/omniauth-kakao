@@ -94,7 +94,7 @@ describe OmniAuth::Strategies::Kakao do
         }.to_json
       )
 
-      FakeWeb.register_uri(:get, "https://kapi.kakao.com/v1/user/me",
+      FakeWeb.register_uri(:get, "https://kapi.kakao.com/v2/user/me",
         :content_type => "application/json;charset=UTF-8",
         :"Authorization" => "Bearer #{ACCESS_TOKEN}",
         :body => {
