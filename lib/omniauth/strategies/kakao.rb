@@ -15,6 +15,8 @@ module OmniAuth
 
       uid { raw_info['id'].to_s }
 
+      byebug
+      
       info do
         {
           'name' => raw_properties['nickname'],
