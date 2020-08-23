@@ -55,7 +55,6 @@ module OmniAuth
       end
 
       def raw_properties
-        debugger
         @raw_properties ||= raw_info['properties']
       end
     end
