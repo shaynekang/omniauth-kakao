@@ -15,7 +15,6 @@ module OmniAuth
 
       uid { raw_info['id'].to_s }
 
-      puts raw_properties
       info do
         {
           'name' => raw_properties['nickname'],
@@ -50,6 +49,7 @@ module OmniAuth
       end
 
       def raw_properties
+        debugger
         @raw_properties ||= raw_info['properties']
       end
     end
