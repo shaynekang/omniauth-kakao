@@ -13,6 +13,12 @@ module OmniAuth
         :token_url => '/oauth/token',
       }
 
+      # option :access_token_options, {
+      #   header_format: 'OAuth %s',
+      #   param_name: 'access_token'
+      #   content_type: 'application/x-www-form-urlencoded;charset=utf-8'
+      # }
+
       uid { raw_info['id'].to_s }
 
       info do
@@ -45,7 +51,7 @@ module OmniAuth
 
     private
       def raw_info
-        @raw_info ||= access_token.get('https://kapi.kakao.com/v2/user/me', {}).parsed || {}
+        @raw_info ||= access_token.get('https://kapi.kakao.com/v2/user/me', access_token.header).parsed || {}
       end
 
       def raw_properties
