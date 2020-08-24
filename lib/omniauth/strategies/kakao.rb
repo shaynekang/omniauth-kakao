@@ -13,11 +13,6 @@ module OmniAuth
         :token_url => '/oauth/token',
       }
 
-      # option :access_token_options, {
-      #   header_format: 'OAuth %s',
-      #   param_name: 'access_token'
-      #   content_type: 'application/x-www-form-urlencoded;charset=utf-8'
-      # }
 
       uid { raw_info['id'].to_s }
 
@@ -55,6 +50,7 @@ module OmniAuth
       end
 
       def raw_properties
+        byebug
         @raw_properties ||= raw_info['properties']
       end
     end
