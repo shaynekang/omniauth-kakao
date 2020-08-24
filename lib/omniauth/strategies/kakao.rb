@@ -20,6 +20,9 @@ module OmniAuth
         {
           'name' => raw_properties['nickname'],
           'image' => raw_properties['thumbnail_image'],
+          'email' => raw_kakao_account['email'],
+          'age_range' => raw_kakao_account['age_range'],
+          'gender' => raw_kakao_account['gender'],
         }
       end
 
@@ -50,8 +53,11 @@ module OmniAuth
       end
 
       def raw_properties
-        byebug
         @raw_properties ||= raw_info['properties']
+      end
+
+      def raw_kakao_account
+        @raw_kakao_account ||= raw_info['kakao_account']
       end
     end
   end
