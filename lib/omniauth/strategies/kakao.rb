@@ -13,7 +13,6 @@ module OmniAuth
         :token_url => '/oauth/token',
       }
 
-
       uid { raw_info['id'].to_s }
 
       info do
@@ -37,7 +36,7 @@ module OmniAuth
 
       def callback_phase
         previous_callback_path = options.delete(:callback_path)
-        @env["PATH_INFO"] = callback_path
+        @env["PATH_INFO"] = "/users/auth/kakao/callback"
         options[:callback_path] = previous_callback_path
         super
       end
