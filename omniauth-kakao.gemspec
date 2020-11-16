@@ -21,7 +21,7 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
 
   s.add_dependency 'omniauth', '~> 1.0'
-  s.add_dependency 'omniauth-oauth2', '~> 1.1'
+  s.add_dependency 'omniauth-oauth2', '~> 1.3.1'
 
   s.add_development_dependency 'rspec', '~> 2.14', '>= 2.14.1'
   s.add_development_dependency 'guard-rspec', '~> 4.2', '>= 4.2.8'
