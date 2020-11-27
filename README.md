@@ -81,6 +81,19 @@ Here's an example *Auth Hash* available in `request.env['omniauth.auth']`:
   :info => {
     :name => 'Hong Gil-Dong',
     :image => 'http://xxx.kakao.com/.../aaa.jpg',
+    :profile_needs_agreement => false,
+    :has_email => true,
+    :email_needs_agreement => false,
+    :is_email_valid => true,
+    :is_email_verified => true,
+    :email => "gildong.hong@gmail.com",
+    :has_birthday => true,
+    :birthday_needs_agreement => false,
+    :birthday => "0726",
+    :birthday_type => "SOLAR",
+    :has_gender => true,
+    :gender_needs_agreement => false,
+    :gender => "male"
   },
   :credentials => {
     :token => 'ABCDEF...', # OAuth 2.0 access_token, which you may wish to store.

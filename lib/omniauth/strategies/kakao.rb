@@ -19,7 +19,7 @@ module OmniAuth
         {
           'name' => raw_properties['nickname'],
           'image' => raw_properties['thumbnail_image'],
-        }
+        }.merge(kakao_account)
       end
 
       extra do
@@ -45,11 +45,15 @@ module OmniAuth
 
     private
       def raw_info
-        @raw_info ||= access_token.get('https://kapi.kakao.com/v1/user/me', {}).parsed || {}
+        @raw_info ||= access_token.get('https://kapi.kakao.com/v2/user/me', {}).parsed || {}
       end
 
       def raw_properties
         @raw_properties ||= raw_info['properties']
+      end
+
+      def kakao_account
+        @kakao_account ||= raw_info['kakao_account'].except('profile')
       end
     end
   end
