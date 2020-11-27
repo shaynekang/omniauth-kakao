@@ -19,7 +19,7 @@ module OmniAuth
         {
           'name' => raw_properties['nickname'],
           'image' => raw_properties['thumbnail_image'],
-        }
+        }.merge(kakao_account)
       end
 
       extra do
@@ -50,6 +50,10 @@ module OmniAuth
 
       def raw_properties
         @raw_properties ||= raw_info['properties']
+      end
+
+      def kakao_account
+        @kakao_account ||= raw_info['kakao_account'].except('profile')
       end
     end
   end
