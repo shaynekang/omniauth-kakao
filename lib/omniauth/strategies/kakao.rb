@@ -22,6 +22,7 @@ module OmniAuth
           'email' => raw_kakao_account['email'],
           'age_range' => raw_kakao_account['age_range'],
           'gender' => raw_kakao_account['gender'],
+          'birthday' => raw_kakao_account['birthday'],
         }
       end
 
