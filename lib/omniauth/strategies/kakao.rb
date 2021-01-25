@@ -19,6 +19,10 @@ module OmniAuth
         {
           'name' => raw_properties['nickname'],
           'image' => raw_properties['thumbnail_image'],
+          'email' => raw_kakao_account['email'],
+          'age_range' => raw_kakao_account['age_range'],
+          'gender' => raw_kakao_account['gender'],
+          'birthday' => raw_kakao_account['birthday'],
         }
       end
 
@@ -33,7 +37,7 @@ module OmniAuth
 
       def callback_phase
         previous_callback_path = options.delete(:callback_path)
-        @env["PATH_INFO"] = "/auth/kakao/callback"
+        @env["PATH_INFO"] = "/users/auth/kakao/callback"
         options[:callback_path] = previous_callback_path
         super
       end
@@ -45,11 +49,15 @@ module OmniAuth
 
     private
       def raw_info
-        @raw_info ||= access_token.get('https://kapi.kakao.com/v1/user/me', {}).parsed || {}
+        @raw_info ||= access_token.get('https://kapi.kakao.com/v2/user/me', {}).parsed || {}
       end
 
       def raw_properties
         @raw_properties ||= raw_info['properties']
+      end
+
+      def raw_kakao_account
+        @raw_kakao_account ||= raw_info['kakao_account']
       end
     end
   end
