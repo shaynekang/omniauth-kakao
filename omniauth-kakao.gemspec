@@ -20,7 +20,7 @@ Gem::Specification.new do |s|
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
 
-  s.add_dependency 'omniauth', '~> 1.0'
+  s.add_dependency 'omniauth', ['>= 1.0', '< 3']
   s.add_dependency 'omniauth-oauth2', '~> 1.5'
 
   s.add_development_dependency 'rspec', '~> 2.14', '>= 2.14.1'
