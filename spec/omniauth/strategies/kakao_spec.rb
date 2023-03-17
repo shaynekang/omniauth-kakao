@@ -1,4 +1,4 @@
-require 'spec_helper'
+require_relative '../../spec_helper'
 require 'omniauth'
 require 'omniauth-kakao'
 
@@ -15,8 +15,9 @@ describe OmniAuth::Strategies::Kakao do
     end
   end
 
-  def make_request(url, opts={})
+  def make_request(url, opts = {})
     Rack::MockRequest.env_for(url, {
+      method: 'POST',
       'rack.session' => {},
       'SERVER_NAME' => SERVER_NAME,
     }.merge(opts))
@@ -74,6 +75,10 @@ describe OmniAuth::Strategies::Kakao do
   end
 
   describe "GET /auth/kakao" do
+    before do
+      allow_any_instance_of(Rack::Protection::AuthenticityToken).to receive(:valid_token?).and_return(true)
+    end
+
     it "should redirect to authorize page" do
       request = make_request('/auth/kakao')
 
