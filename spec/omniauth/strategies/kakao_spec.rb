@@ -4,18 +4,14 @@ require 'omniauth-kakao'
 
 describe OmniAuth::Strategies::Kakao do
   CLIENT_ID = '<<your-client-id>>'
+  CLIENT_SECRET = '<<your-secret>>'
   SERVER_NAME = 'www.example.com'
 
-  before do
-    OmniAuth.config.logger.level = 5
-  end
-
-  def make_middleware(client_id, opts={})
-    app = ->(env) { [200, env, "app"] }
-
-    middleware = OmniAuth::Strategies::Kakao.new(app, opts)
-    middleware.tap do |middleware|
-      middleware.options.client_id = client_id
+  let(:request) { double('Request', params: {}, cookies: {}, env: {}) }
+  let(:app) { ->(env) { [200, env, "app"] } }
+  subject(:middleware) do
+    OmniAuth::Strategies::Kakao.new(app, CLIENT_ID, CLIENT_SECRET, @options || {}).tap do |strategy|
+      allow(strategy).to receive(:request) { request }
     end
   end
 
@@ -26,10 +22,60 @@ describe OmniAuth::Strategies::Kakao do
     }.merge(opts))
   end
 
+  describe '#client_options' do
+    it 'has correct site' do
+      expect(subject.client.site).to eq('https://kauth.kakao.com')
+    end
+
+    it 'has correct authorize_url' do
+      expect(subject.client.options[:authorize_url]).to eq('oauth/authorize')
+    end
+
+    it 'has correct token_url' do
+      expect(subject.client.options[:token_url]).to eq('oauth/token')
+    end
+
+    describe 'overrides' do
+
+      context 'as strings' do
+        it 'should allow overriding the site' do
+          @options = { client_options: { 'site' => 'https://example.com' } }
+          expect(subject.client.site).to eq('https://example.com')
+        end
+
+        it 'should allow overriding the authorize_url' do
+          @options = { client_options: { 'authorize_url' => 'https://example.com' } }
+          expect(subject.client.options[:authorize_url]).to eq('https://example.com')
+        end
+
+        it 'should allow overriding the token_url' do
+          @options = { client_options: { 'token_url' => 'https://example.com' } }
+          expect(subject.client.options[:token_url]).to eq('https://example.com')
+        end
+      end
+
+      context 'as symbols' do
+        it 'should allow overriding the site' do
+          @options = { client_options: { site: 'https://example.com' } }
+          expect(subject.client.site).to eq('https://example.com')
+        end
+
+        it 'should allow overriding the authorize_url' do
+          @options = { client_options: { authorize_url: 'https://example.com' } }
+          expect(subject.client.options[:authorize_url]).to eq('https://example.com')
+        end
+
+        it 'should allow overriding the token_url' do
+          @options = { client_options: { token_url: 'https://example.com' } }
+          expect(subject.client.options[:token_url]).to eq('https://example.com')
+        end
+      end
+    end
+  end
+
   describe "GET /auth/kakao" do
     it "should redirect to authorize page" do
       request = make_request('/auth/kakao')
-      middleware = make_middleware(CLIENT_ID)
 
       code, env = middleware.call(request)
       expect(code).to eq 302
@@ -47,7 +93,7 @@ describe OmniAuth::Strategies::Kakao do
 
     it "should customize redirect path" do
       request = make_request('/auth/kakao')
-      middleware = make_middleware(CLIENT_ID, redirect_path: '/auth/kakao/callback')
+      @options = { redirect_path: '/auth/kakao/callback' }
 
       code, env = middleware.call(request)
       expect(code).to eq 302
@@ -75,9 +121,9 @@ describe OmniAuth::Strategies::Kakao do
         .with(
           body: {
             grant_type: 'authorization_code',
-            client_id: CLIENT_ID,
-            client_secret: nil,
-            redirect_uri: "http://#{SERVER_NAME}/auth/kakao/callback",
+            # client_id: CLIENT_ID,
+            # client_secret: CLIENT_SECRET,
+            redirect_uri: "http://#{SERVER_NAME}/auth/kakao/callback?code=dummy-code&state=dummy-state",
             code: CODE
           },
         ).to_return(
@@ -120,7 +166,6 @@ describe OmniAuth::Strategies::Kakao do
         },
       })
 
-      middleware = make_middleware(CLIENT_ID)
       code, env = middleware.call(request)
       expect(code).to eq 200
 
@@ -160,7 +205,6 @@ describe OmniAuth::Strategies::Kakao do
     describe "GET /auth/kakao/callback" do
       it "should request registered mock" do
         request = make_request("/auth/kakao/callback")
-        middleware = make_middleware(CLIENT_ID)
         code, env = middleware.call(request)
         expect(code).to eq 200
 
