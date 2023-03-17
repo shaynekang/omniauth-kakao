@@ -4,7 +4,7 @@
 # loaded once.
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
-require 'fakeweb'
+require 'webmock/rspec'
 require 'json'
 
 $:.unshift File.expand_path('..', __FILE__)

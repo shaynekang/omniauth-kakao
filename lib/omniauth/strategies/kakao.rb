@@ -19,7 +19,11 @@ module OmniAuth
         {
           name: raw_properties['nickname'],
           image: raw_properties['profile_image'],
-          email: raw_kakao_account['email']
+          thumbnail_image: raw_properties['thumbnail_image'],
+          email: raw_kakao_account['email'],
+          age_range: raw_kakao_account['age_range'],
+          gender: raw_kakao_account['gender'],
+          birthday: raw_kakao_account['birthday']
         }
       end
 

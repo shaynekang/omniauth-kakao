@@ -32,20 +32,17 @@ describe OmniAuth::Strategies::Kakao do
       middleware = make_middleware(CLIENT_ID)
 
       code, env = middleware.call(request)
+      expect(code).to eq 302
 
-      code.should == 302
-
-      expect_url = <<-EXPECT
+      expect_url = <<~EXPECT.gsub(/(\n|\t|\s)/, '')
         https://kauth.kakao.com/oauth/authorize
           ?client_id=#{CLIENT_ID}
-          &redirect_uri=http://#{SERVER_NAME}/oauth
+          &redirect_uri=http://#{SERVER_NAME}/auth/kakao/callback
           &response_type=code
         EXPECT
-        .gsub(/(\n|\t|\s)/, '')
 
-      actual_url = URI.decode(env['Location'].split("&state")[0])
-
-      actual_url.should == expect_url
+      actual_url = URI.decode_uri_component(env['Location'].split("&state")[0])
+      expect(actual_url).to eq expect_url
     end
 
     it "should customize redirect path" do
@@ -53,91 +50,97 @@ describe OmniAuth::Strategies::Kakao do
       middleware = make_middleware(CLIENT_ID, redirect_path: '/auth/kakao/callback')
 
       code, env = middleware.call(request)
+      expect(code).to eq 302
 
-      code.should == 302
-
-      expect_url = <<-EXPECT
+      expect_url = <<~EXPECT.gsub(/(\n|\t|\s)/, '')
         https://kauth.kakao.com/oauth/authorize
           ?client_id=#{CLIENT_ID}
           &redirect_uri=http://#{SERVER_NAME}/auth/kakao/callback
           &response_type=code
         EXPECT
-        .gsub(/(\n|\t|\s)/, '')
 
-      actual_url = URI.decode(env['Location'].split("&state")[0])
-
-      actual_url.should == expect_url
+      actual_url = URI.decode_uri_component(env['Location'].split("&state")[0])
+      expect(actual_url).to eq expect_url
     end
   end
 
-  describe "GET /oauth" do
+  describe "GET /auth/kakao/callback" do
     CODE = "dummy-code"
     STATE = "dummy-state"
     ACCESS_TOKEN = "dummy-access-token"
     REFRESH_TOKEN = "dummy-refresh-token"
 
     before do
-      FakeWeb.register_uri(:post, "https://kauth.kakao.com/oauth/token",
-        :content_type => "application/json;charset=UTF-8",
-        :parameters => {
-          :grant_type => 'authorization_code',
-          :client_id => CLIENT_ID,
-          :redirect_uri => URI.encode("http://#{SERVER_NAME}/oauth"),
-          :code => CODE
-        },
-        :body => {
-          :access_token => ACCESS_TOKEN,
-          :token_type => "bearer",
-          :refresh_token => REFRESH_TOKEN,
-          :expires_in => 99999,
-          :scope => "Basic_Profile"
-        }.to_json
-      )
+      stub_request(:post, "https://kauth.kakao.com/oauth/token")
+        .with(
+          body: {
+            grant_type: 'authorization_code',
+            client_id: CLIENT_ID,
+            client_secret: nil,
+            redirect_uri: "http://#{SERVER_NAME}/auth/kakao/callback",
+            code: CODE
+          },
+        ).to_return(
+          headers: {
+            content_type: "application/json;charset=UTF-8",
+          },
+          body: {
+            access_token: ACCESS_TOKEN,
+            token_type: "bearer",
+            refresh_token: REFRESH_TOKEN,
+            expires_in: 99999,
+            scope: "Basic_Profile"
+          }.to_json
+        )
 
-      FakeWeb.register_uri(:get, "https://kapi.kakao.com/v1/user/me",
-        :content_type => "application/json;charset=UTF-8",
-        :"Authorization" => "Bearer #{ACCESS_TOKEN}",
-        :body => {
-          :id => 123456789,
-          :properties => {
-            :nickname => "John Doe",
-            :thumbnail_image => "http://xxx.kakao.com/.../aaa.jpg",
-            :profile_image => "http://xxx.kakao.com/.../bbb.jpg",
+      stub_request(:get, "https://kapi.kakao.com/v2/user/me")
+        .with(
+          headers: {
+            Authorization: "Bearer #{ACCESS_TOKEN}"
           }
-        }.to_json
-      )
+        ).to_return(
+          headers: {
+            content_type: "application/json;charset=UTF-8",
+          },
+          body: {
+            id: 123456789,
+            properties: {
+              nickname: "John Doe",
+              thumbnail_image: "http://xxx.kakao.com/.../aaa.jpg",
+              profile_image: "http://xxx.kakao.com/.../bbb.jpg",
+            }
+          }.to_json
+        )
     end
 
     it "should request access token and user information" do
-      request = make_request("/oauth?code=#{CODE}&state=#{STATE}", {
+      request = make_request("/auth/kakao/callback?code=#{CODE}&state=#{STATE}", {
         'rack.session' => {
           'omniauth.state' => STATE
         },
       })
 
       middleware = make_middleware(CLIENT_ID)
-
       code, env = middleware.call(request)
-
-      code.should == 200
+      expect(code).to eq 200
 
       response = env['omniauth.auth']
-
-      response.provider.should == "kakao"
-      response.uid.should == "123456789"
+      expect(response.provider).to eq "kakao"
+      expect(response.uid).to eq "123456789"
 
       information = response.info
-      information.name.should == "John Doe"
-      information.image.should == "http://xxx.kakao.com/.../aaa.jpg"
+      expect(information.name).to eq "John Doe"
+      expect(information.image).to eq "http://xxx.kakao.com/.../bbb.jpg"
+      expect(information.thumbnail_image).to eq "http://xxx.kakao.com/.../aaa.jpg"
 
       credentials = response.credentials
-      credentials.token.should == ACCESS_TOKEN
-      credentials.refresh_token.should == REFRESH_TOKEN
+      expect(credentials.token).to eq ACCESS_TOKEN
+      expect(credentials.refresh_token).to eq REFRESH_TOKEN
 
-      properties = response.extra.properties
-      properties.nickname.should == "John Doe"
-      properties.thumbnail_image.should == "http://xxx.kakao.com/.../aaa.jpg"
-      properties.profile_image.should == "http://xxx.kakao.com/.../bbb.jpg"
+      properties = response.extra.raw_info.properties
+      expect(properties.nickname).to eq "John Doe"
+      expect(properties.thumbnail_image).to eq "http://xxx.kakao.com/.../aaa.jpg"
+      expect(properties.profile_image).to eq "http://xxx.kakao.com/.../bbb.jpg"
     end
   end
 
@@ -154,22 +157,20 @@ describe OmniAuth::Strategies::Kakao do
       })
     end
 
-    describe "GET /oauth" do
+    describe "GET /auth/kakao/callback" do
       it "should request registered mock" do
-        request = make_request("/oauth")
+        request = make_request("/auth/kakao/callback")
         middleware = make_middleware(CLIENT_ID)
         code, env = middleware.call(request)
-
-        code.should == 200
+        expect(code).to eq 200
 
         response = env["omniauth.auth"]
-
-        response.provider.should == "kakao"
-        response.uid.should == "123456789"
+        expect(response.provider).to eq "kakao"
+        expect(response.uid).to eq "123456789"
 
         information = response.info
-        information.name.should == "John Doe"
-        information.image.should == "http://xxx.kakao.com/.../aaa.jpg"
+        expect(information.name).to eq "John Doe"
+        expect(information.image).to eq "http://xxx.kakao.com/.../aaa.jpg"
       end
     end
 
