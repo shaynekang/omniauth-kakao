@@ -9,6 +9,7 @@ module OmniAuth
         site: 'https://kauth.kakao.com',
         authorize_path: '/oauth/authorize',
         token_path: '/oauth/token',
+        auth_scheme: :request_body
       }
 
       uid { raw_info['id'].to_s }

@@ -126,8 +126,8 @@ describe OmniAuth::Strategies::Kakao do
         .with(
           body: {
             grant_type: 'authorization_code',
-            # client_id: CLIENT_ID,
-            # client_secret: CLIENT_SECRET,
+            client_id: CLIENT_ID,
+            client_secret: CLIENT_SECRET,
             redirect_uri: "http://#{SERVER_NAME}/auth/kakao/callback?code=dummy-code&state=dummy-state",
             code: CODE
           },
