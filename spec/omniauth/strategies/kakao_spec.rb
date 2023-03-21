@@ -128,7 +128,7 @@ describe OmniAuth::Strategies::Kakao do
             grant_type: 'authorization_code',
             client_id: CLIENT_ID,
             client_secret: CLIENT_SECRET,
-            redirect_uri: "http://#{SERVER_NAME}/auth/kakao/callback?code=dummy-code&state=dummy-state",
+            redirect_uri: "http://#{SERVER_NAME}/auth/kakao/callback",
             code: CODE
           },
         ).to_return(
