@@ -30,6 +30,16 @@ module OmniAuth
         { raw_info: raw_info }
       end
 
+      def callback_url
+        if @authorization_code_from_signed_request_in_cookie
+          # This fixes a redirect_uri issue. See: https://devtalk.kakao.com/t/rest-api-omniauth/19207
+          ''
+        else
+          # callback url ignorance issue from https://github.com/intridea/omniauth-oauth2/commit/85fdbe117c2a4400d001a6368cc359d88f40abc7
+          options[:callback_url] || (full_host + script_name + callback_path)
+        end
+      end
+
       private
 
       def raw_info
